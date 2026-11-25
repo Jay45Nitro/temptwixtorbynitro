@@ -104,7 +104,7 @@ a:focus-visible, input:focus-visible { outline: 2px solid var(--orange); outline
   overflow: hidden;
   padding: clamp(3rem, 7vw, 5.5rem) 6vw 2.5rem;
   background: linear-gradient(120deg, rgba(9, 9, 13, 0.94) 15%, rgba(18, 18, 28, 0.82) 60%, rgba(255, 89, 56, 0.14)),
-              url('hero-bg.jpg') right center/cover;
+              url('https://i.ytimg.com/vi/-DLQUUNYfZQ/maxresdefault.jpg') center/cover;
   border-bottom: 1px solid var(--border);
 }
 .hero-badge {
