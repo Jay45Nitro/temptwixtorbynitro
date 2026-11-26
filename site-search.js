@@ -71,3 +71,67 @@
     initSearch();
   }
 })();
+
+(function() {
+  function loadScript(src, attrs, parent) {
+    var s = document.createElement('script');
+    s.src = src;
+    if (attrs) {
+      Object.keys(attrs).forEach(function(k) { s.setAttribute(k, attrs[k]); });
+    }
+    (parent || document.body).appendChild(s);
+    return s;
+  }
+
+  function initNitroAds() {
+    if (window.__nitroAdsLoaded) return;
+    window.__nitroAdsLoaded = true;
+
+    var path = (window.location.pathname || '').toLowerCase();
+    var isHomeOrExplore = path === '/' || path.endsWith('/index.html') || path.endsWith('/explore.html');
+
+    // 1. Social Bar on all pages
+    loadScript('https://bancadeltempoidea.org/14/bd2df300207f8d16242dcb4b1abb4a1f', { 'data-cfasync': 'false' }, document.body);
+
+    // 2. Native Banner above footer on all pages
+    var footer = document.querySelector('footer');
+    if (footer && !document.getElementById('container-ef8a9854af9528ca0f2d3649ea10cbee')) {
+      var nativeWrap = document.createElement('div');
+      nativeWrap.className = 'nt-ad-slot';
+      nativeWrap.style.cssText = 'max-width:1160px;margin:2rem auto 1rem;padding:0 5vw;text-align:center;';
+      var nativeDiv = document.createElement('div');
+      nativeDiv.id = 'container-ef8a9854af9528ca0f2d3649ea10cbee';
+      nativeWrap.appendChild(nativeDiv);
+      footer.parentNode.insertBefore(nativeWrap, footer);
+      loadScript('https://bancadeltempoidea.org/21/ef8a9854af9528ca0f2d3649ea10cbee', {
+        'async': '',
+        'fetchpriority': 'high',
+        'data-cfasync': 'false'
+      }, nativeWrap);
+    }
+
+    // 3. 300x250 Banner on category & clip pages (after search bar, before grid)
+    if (!isHomeOrExplore) {
+      var anchor = document.querySelector('.search-container') || document.querySelector('main') || document.querySelector('.grid');
+      if (anchor) {
+        var box = document.createElement('div');
+        box.style.cssText = 'text-align:center;margin:1.1rem auto 0.5rem;min-height:250px;';
+        anchor.insertAdjacentElement('afterend', box);
+        window.atOptions = {
+          'key': '08f6ecf2b8f3d47f4d81c03747c31024',
+          'format': 'iframe',
+          'height': 250,
+          'width': 300,
+          'params': {}
+        };
+        loadScript('https://bancadeltempoidea.org/22/08f6ecf2b8f3d47f4d81c03747c31024', { 'data-cfasync': 'false' }, box);
+      }
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initNitroAds);
+  } else {
+    initNitroAds();
+  }
+})();
