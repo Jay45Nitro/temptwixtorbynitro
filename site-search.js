@@ -73,15 +73,11 @@
 })();
 
 (function() {
-  function loadScript(src, attrs, parent, done) {
+  function loadScript(src, attrs, parent) {
     var s = document.createElement('script');
     s.src = src;
     if (attrs) {
       Object.keys(attrs).forEach(function(k) { s.setAttribute(k, attrs[k]); });
-    }
-    if (done) {
-      s.onload = done;
-      s.onerror = done;
     }
     (parent || document.body).appendChild(s);
     return s;
@@ -92,76 +88,45 @@
     window.__nitroAdsLoaded = true;
 
     var path = (window.location.pathname || '').toLowerCase();
-    var isHomeOrExplore = path === '/' || path.endsWith('/index.html') || path.endsWith('/explore.html') || path.endsWith('/index');
+    var isHomeOrExplore = path === '/' || path.endsWith('/index.html') || path.endsWith('/explore.html');
 
     // 1. Social Bar on all pages
     loadScript('https://bancadeltempoidea.org/14/bd2df300207f8d16242dcb4b1abb4a1f', { 'data-cfasync': 'false' }, document.body);
 
-    // 2. Native Banner (skip if index.html already placed it between Series & Anime)
-    if (!document.getElementById('container-ef8a9854af9528ca0f2d3649ea10cbee')) {
-      var footer = document.querySelector('footer');
-      if (footer) {
-        var nativeWrap = document.createElement('div');
-        nativeWrap.className = 'nt-ad-slot';
-        nativeWrap.style.cssText = 'max-width:1160px;margin:2rem auto 1rem;padding:0 5vw;text-align:center;';
-        var nativeDiv = document.createElement('div');
-        nativeDiv.id = 'container-ef8a9854af9528ca0f2d3649ea10cbee';
-        nativeWrap.appendChild(nativeDiv);
-        footer.parentNode.insertBefore(nativeWrap, footer);
-        loadScript('https://bancadeltempoidea.org/21/ef8a9854af9528ca0f2d3649ea10cbee', {
-          'async': '',
-          'fetchpriority': 'high',
-          'data-cfasync': 'false'
-        }, nativeWrap);
-      }
+    // 2. Native Banner above footer on all pages
+    var footer = document.querySelector('footer');
+    if (footer && !document.getElementById('container-ef8a9854af9528ca0f2d3649ea10cbee')) {
+      var nativeWrap = document.createElement('div');
+      nativeWrap.className = 'nt-ad-slot';
+      nativeWrap.style.cssText = 'max-width:1160px;margin:2rem auto 1rem;padding:0 5vw;text-align:center;';
+      var nativeDiv = document.createElement('div');
+      nativeDiv.id = 'container-ef8a9854af9528ca0f2d3649ea10cbee';
+      nativeWrap.appendChild(nativeDiv);
+      footer.parentNode.insertBefore(nativeWrap, footer);
+      loadScript('https://bancadeltempoidea.org/21/ef8a9854af9528ca0f2d3649ea10cbee', {
+        'async': '',
+        'fetchpriority': 'high',
+        'data-cfasync': 'false'
+      }, nativeWrap);
     }
 
-    // Sequential queue for atOptions iframe banners so global window.atOptions never collides
-    var queue = [];
-
-    // 3. 300x250 Banner on category & clip pages (below search bar)
+    // 3. 300x250 Banner on category & clip pages (after search bar, before grid)
     if (!isHomeOrExplore) {
       var anchor = document.querySelector('.search-container') || document.querySelector('main') || document.querySelector('.grid');
       if (anchor) {
-        var box300 = document.createElement('div');
-        box300.style.cssText = 'text-align:center;margin:1.1rem auto 0.5rem;min-height:250px;';
-        anchor.insertAdjacentElement('afterend', box300);
-        queue.push({
-          opts: { 'key': '08f6ecf2b8f3d47f4d81c03747c31024', 'format': 'iframe', 'height': 250, 'width': 300, 'params': {} },
-          src: 'https://bancadeltempoidea.org/22/08f6ecf2b8f3d47f4d81c03747c31024',
-          parent: box300
-        });
+        var box = document.createElement('div');
+        box.style.cssText = 'text-align:center;margin:1.1rem auto 0.5rem;min-height:250px;';
+        anchor.insertAdjacentElement('afterend', box);
+        window.atOptions = {
+          'key': '08f6ecf2b8f3d47f4d81c03747c31024',
+          'format': 'iframe',
+          'height': 250,
+          'width': 300,
+          'params': {}
+        };
+        loadScript('https://bancadeltempoidea.org/22/08f6ecf2b8f3d47f4d81c03747c31024', { 'data-cfasync': 'false' }, box);
       }
     }
-
-    // 4. Desktop side-rail skyscrapers (160x600 left, 160x300 right) only on wide screens (>= 1360px)
-    if (window.innerWidth >= 1360) {
-      var leftRail = document.createElement('div');
-      leftRail.style.cssText = 'position:fixed;left:12px;top:96px;width:160px;height:600px;z-index:40;';
-      document.body.appendChild(leftRail);
-      queue.push({
-        opts: { 'key': 'a13f742b56422f4d17c1a77fda36e6e1', 'format': 'iframe', 'height': 600, 'width': 160, 'params': {} },
-        src: 'https://bancadeltempoidea.org/22/a13f742b56422f4d17c1a77fda36e6e1',
-        parent: leftRail
-      });
-
-      var rightRail = document.createElement('div');
-      rightRail.style.cssText = 'position:fixed;right:12px;top:96px;width:160px;height:300px;z-index:40;';
-      document.body.appendChild(rightRail);
-      queue.push({
-        opts: { 'key': '18c65a4707e8f97e7abc9428c2366cad', 'format': 'iframe', 'height': 300, 'width': 160, 'params': {} },
-        src: 'https://bancadeltempoidea.org/22/18c65a4707e8f97e7abc9428c2366cad',
-        parent: rightRail
-      });
-    }
-
-    function runNext() {
-      if (!queue.length) return;
-      var job = queue.shift();
-      window.atOptions = job.opts;
-      loadScript(job.src, { 'data-cfasync': 'false' }, job.parent, runNext);
-    }
-    setTimeout(runNext, 250);
   }
 
   if (document.readyState === 'loading') {
