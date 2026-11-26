@@ -237,20 +237,314 @@
     }
     .footer-bottom a:hover { color: var(--orange); }
   </style>
+  <style>
+    .nt-topbar {
+      position: sticky;
+      top: 0;
+      z-index: 90;
+      padding: 0.75rem 5vw;
+      background: rgba(9, 9, 13, 0.88);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nt-topbar-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      background: rgba(18, 18, 26, 0.9);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 999px;
+      padding: 0.45rem 0.65rem 0.45rem 1.1rem;
+    }
+    .nt-brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      text-decoration: none;
+      color: var(--ink);
+      font: 900 italic 1.12rem/1 var(--display);
+      letter-spacing: -0.04em;
+      white-space: nowrap;
+    }
+    .nt-brand-mark {
+      display: inline-grid;
+      place-items: center;
+      width: 28px;
+      height: 28px;
+      border-radius: 7px;
+      background: linear-gradient(135deg, var(--orange), #ff7f50);
+      color: #09090d;
+      font-style: italic;
+      font-weight: 900;
+      font-size: 1rem;
+      transform: skew(-10deg);
+    }
+    .nt-brand span { color: var(--orange); font-size: 0.72rem; letter-spacing: 0.14em; font-style: normal; display: block; margin-top: 2px; }
+    .nt-pill-nav {
+      display: flex;
+      align-items: center;
+      gap: 0.25rem;
+      background: rgba(9, 9, 13, 0.72);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      border-radius: 999px;
+      padding: 0.28rem;
+    }
+    .nt-pill-nav a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      padding: 0.48rem 0.95rem;
+      border-radius: 999px;
+      transition: all 0.18s ease;
+      white-space: nowrap;
+    }
+    .nt-pill-nav a:hover { color: var(--ink); background: rgba(255, 255, 255, 0.05); }
+    .nt-pill-nav a.active {
+      color: #fff;
+      background: linear-gradient(135deg, var(--orange), #e63e1f);
+      box-shadow: 0 4px 16px rgba(255, 89, 56, 0.35);
+    }
+    .nt-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      position: relative;
+    }
+    .nt-icon-btn {
+      width: 38px;
+      height: 38px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 89, 56, 0.35);
+      background: rgba(255, 89, 56, 0.08);
+      color: var(--ink);
+      display: inline-grid;
+      place-items: center;
+      cursor: pointer;
+      position: relative;
+      transition: all 0.18s ease;
+      font-size: 1rem;
+    }
+    .nt-icon-btn:hover { background: rgba(255, 89, 56, 0.2); border-color: var(--orange); }
+    .nt-bell-dot {
+      position: absolute;
+      top: 7px;
+      right: 8px;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--orange);
+    }
+    .nt-bell-pop {
+      display: none;
+      position: absolute;
+      top: calc(100% + 12px);
+      right: 0;
+      width: min(92vw, 350px);
+      background: #12121a;
+      border: 1px solid rgba(255, 89, 56, 0.4);
+      border-top: 3px solid var(--orange);
+      border-radius: 16px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.65);
+      overflow: hidden;
+      z-index: 120;
+    }
+    .nt-bell-pop.open { display: block; }
+    .nt-bell-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.85rem 1rem;
+      border-bottom: 1px solid var(--border);
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: var(--ink);
+    }
+    .nt-bell-badge {
+      background: var(--orange);
+      color: #fff;
+      font-size: 0.72rem;
+      padding: 0.12rem 0.5rem;
+      border-radius: 999px;
+      margin-left: 0.4rem;
+    }
+    .nt-bell-list { max-height: 290px; overflow-y: auto; padding: 0.55rem; display: flex; flex-direction: column; gap: 0.45rem; }
+    .nt-bell-item {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      padding: 0.55rem;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: rgba(255, 255, 255, 0.02);
+      text-decoration: none;
+      color: var(--ink);
+      transition: border-color 0.18s ease;
+    }
+    .nt-bell-item:hover { border-color: var(--orange); }
+    .nt-bell-item img { width: 52px; height: 34px; object-fit: cover; border-radius: 6px; flex-shrink: 0; }
+    .nt-bell-item small { display: block; color: var(--orange); font-size: 0.68rem; font-weight: 800; text-transform: uppercase; }
+    .nt-bell-item span { display: block; font-size: 0.82rem; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 220px; }
+    .nt-bell-foot {
+      padding: 0.75rem 1rem;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.84rem;
+    }
+    .nt-bell-foot a { color: var(--orange); text-decoration: none; font-weight: 700; }
+    /* Slide-out Drawer */
+    .nt-drawer-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.65);
+      backdrop-filter: blur(4px);
+      z-index: 190;
+    }
+    .nt-drawer-backdrop.open { display: block; }
+    .nt-drawer {
+      position: fixed;
+      top: 0;
+      right: -320px;
+      width: min(86vw, 310px);
+      height: 100vh;
+      background: #0e0e14;
+      border-left: 1px solid var(--border);
+      z-index: 200;
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: right 0.24s ease;
+      overflow-y: auto;
+    }
+    .nt-drawer.open { right: 0; }
+    .nt-drawer-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 1rem;
+    }
+    .nt-drawer-title { font: 900 italic 1.15rem/1 var(--display); color: var(--orange); letter-spacing: 0.02em; }
+    .nt-drawer-links { display: flex; flex-direction: column; gap: 0.35rem; }
+    .nt-drawer-links a {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.78rem 1rem;
+      border-radius: 12px;
+      color: var(--ink);
+      text-decoration: none;
+      font-weight: 650;
+      font-size: 0.96rem;
+      transition: background 0.18s ease;
+    }
+    .nt-drawer-links a:hover { background: rgba(255, 255, 255, 0.06); }
+    .nt-drawer-links a.active {
+      background: linear-gradient(135deg, var(--orange), #e63e1f);
+      color: #fff;
+      box-shadow: 0 6px 20px rgba(255, 89, 56, 0.32);
+    }
+    .nt-drawer-card {
+      margin-top: 1.25rem;
+      padding: 1rem;
+      border-radius: 14px;
+      border: 1px solid rgba(255, 89, 56, 0.25);
+      background: rgba(255, 89, 56, 0.06);
+      font-size: 0.88rem;
+      color: var(--muted);
+    }
+    @media (max-width: 900px) {
+      .nt-pill-nav { display: none; }
+    }
+  </style>
 </head>
 <body>
-  <header><h1>Twixtors by Nitro</h1></header>
-  <nav>
-    <a href="index.html">Home</a>
-    <a href="movies.html">Movies</a>
-    <a href="anime.html">Anime</a>
-    <a href="series.html">Series</a>
-    <a href="sports.html">Sports</a>
-    <a href="cars.html">Cars</a>
-    <a href="faq.html">FAQ</a>
-    <a href="about.html">About</a>
-    <a href="contact.html">Contact</a>
-  </nav>
+    <div class="nt-topbar">
+    <div class="nt-topbar-inner">
+      <a class="nt-brand" href="index.html">
+        <span class="nt-brand-mark">N</span>
+        <div>NITROTWIXTOR<span>4K SCENEPACKS</span></div>
+      </a>
+      <nav class="nt-pill-nav" aria-label="Primary Navigation" style="position:static;background:rgba(9,9,13,0.72);border:1px solid rgba(255,255,255,0.07);padding:0.28rem;backdrop-filter:none;">
+        <a href="index.html">Home</a>
+        <a href="explore.html">Explore</a>
+        <a href="movies.html">Movies</a>
+        <a href="anime.html">Anime</a>
+        <a href="series.html">Series</a>
+        <a href="faq.html">FAQ</a>
+        <a href="about.html">About</a>
+        <a href="terms.html" class="active">Policy</a>
+      </nav>
+      <div class="nt-actions">
+        <button class="nt-icon-btn" id="ntBellBtn" type="button" aria-label="Latest clips notifications">&#128276;<span class="nt-bell-dot"></span></button>
+        <button class="nt-icon-btn" id="ntMenuBtn" type="button" aria-label="Open menu">&#9776;</button>
+        <div class="nt-bell-pop" id="ntBellPop">
+          <div class="nt-bell-head">
+            <div>Latest Clips <span class="nt-bell-badge">4</span></div>
+            <button type="button" id="ntBellClose" style="background:none;border:0;color:var(--muted);cursor:pointer;font-size:1rem;">&#10005;</button>
+          </div>
+          <div class="nt-bell-list">
+            <a class="nt-bell-item" href="action.html">
+              <img src="https://i.ytimg.com/vi/MRnNuabKDNk/hqdefault.jpg" alt="Avengers Doomsday">
+              <div><small>New Clip Added</small><span>Avengers: Doomsday Trailer 4K Twixtor</span></div>
+            </a>
+            <a class="nt-bell-item" href="anime-action-bleach.html">
+              <img src="https://i.ytimg.com/vi/PXLQqHgsbEU/hqdefault.jpg" alt="Ichigo Kurosaki">
+              <div><small>New Clip Added</small><span>Ichigo Kurosaki 4K Twixtor</span></div>
+            </a>
+            <a class="nt-bell-item" href="series-action-theboys.html">
+              <img src="https://i.ytimg.com/vi/T3BUyfbrVV0/hqdefault.jpg" alt="Billy Butcher">
+              <div><small>New Clip Added</small><span>Billy Butcher 4K Twixtor S05</span></div>
+            </a>
+            <a class="nt-bell-item" href="cars-aesthetic.html">
+              <img src="https://i.ytimg.com/vi/x6-Y0GIUDXs/hqdefault.jpg" alt="GTR Car Aesthetic">
+              <div><small>New Clip Added</small><span>GTR Car Aesthetic Edit</span></div>
+            </a>
+          </div>
+          <div class="nt-bell-foot">
+            <a href="explore.html">Explore all clips &rarr;</a>
+            <a href="https://t.me/twixtorsbynitro" target="_blank" rel="noopener">Telegram</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="nt-drawer-backdrop" id="ntDrawerBackdrop"></div>
+  <aside class="nt-drawer" id="ntDrawer" aria-label="Menu Drawer">
+    <div>
+      <div class="nt-drawer-head">
+        <span class="nt-drawer-title">NITROTWIXTOR</span>
+        <button class="nt-icon-btn" id="ntDrawerClose" type="button" aria-label="Close menu">&#10005;</button>
+      </div>
+      <div class="nt-drawer-links">
+      <a href="index.html"><span>Home</span></a>
+      <a href="explore.html"><span>Explore & Search</span></a>
+      <a href="movies.html"><span>Movies</span></a>
+      <a href="anime.html"><span>Anime</span></a>
+      <a href="series.html"><span>Series</span></a>
+      <a href="sports.html"><span>Sports</span></a>
+      <a href="cars.html"><span>Cars</span></a>
+      <a href="faq.html"><span>FAQ</span></a>
+      <a href="about.html"><span>About</span></a>
+      <a href="terms.html" class="active"><span>Policy & Legal</span><span>&#10003;</span></a>
+      <a href="contact.html"><span>Contact</span></a>
+      </div>
+    </div>
+    <div class="nt-drawer-card">
+      <div style="color:var(--ink);font-weight:700;margin-bottom:0.45rem;">Get notified about new clips</div>
+      <p style="margin:0 0 0.75rem;font-size:0.84rem;">Join our Telegram group for instant 4K Twixtor pack drops.</p>
+      <a class="download-btn" href="https://t.me/twixtorsbynitro" target="_blank" rel="noopener" style="display:inline-block;">Join @twixtorsbynitro</a>
+    </div>
+  </aside>
   <div class="search-container">
     <input type="text" id="searchInput" placeholder="Search entire website (movies, anime, series, sports, cars, actresses, clips)..." aria-label="Search entire website" />
   </div>
@@ -339,5 +633,35 @@
     </div>
   </footer>
   <script src="site-search.js"></script>
+  <script>
+    (function() {
+      const bellBtn = document.getElementById('ntBellBtn');
+      const bellPop = document.getElementById('ntBellPop');
+      const bellClose = document.getElementById('ntBellClose');
+      const menuBtn = document.getElementById('ntMenuBtn');
+      const drawer = document.getElementById('ntDrawer');
+      const backdrop = document.getElementById('ntDrawerBackdrop');
+      const drawerClose = document.getElementById('ntDrawerClose');
+
+      if (bellBtn && bellPop) {
+        bellBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          bellPop.classList.toggle('open');
+        });
+        if (bellClose) bellClose.addEventListener('click', () => bellPop.classList.remove('open'));
+        document.addEventListener('click', (e) => {
+          if (!bellPop.contains(e.target) && e.target !== bellBtn) bellPop.classList.remove('open');
+        });
+      }
+      function toggleDrawer(open) {
+        if (!drawer || !backdrop) return;
+        drawer.classList.toggle('open', open);
+        backdrop.classList.toggle('open', open);
+      }
+      if (menuBtn) menuBtn.addEventListener('click', () => toggleDrawer(true));
+      if (drawerClose) drawerClose.addEventListener('click', () => toggleDrawer(false));
+      if (backdrop) backdrop.addEventListener('click', () => toggleDrawer(false));
+    })();
+  </script>
 </body>
 </html>
