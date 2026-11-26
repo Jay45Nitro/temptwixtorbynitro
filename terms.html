@@ -1,0 +1,343 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Terms of Use | NitroTwixtor</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .page-wrap {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 2.2rem 6vw 3.5rem;
+    }
+    .page-hero {
+      background: linear-gradient(145deg, rgba(255, 89, 56, 0.12), rgba(18, 18, 26, 0.94) 55%);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 2.2rem 2rem;
+      margin-bottom: 2rem;
+    }
+    .page-badge {
+      display: inline-block;
+      padding: 0.28rem 0.78rem;
+      border-radius: 999px;
+      background: rgba(255, 89, 56, 0.14);
+      border: 1px solid rgba(255, 89, 56, 0.42);
+      color: var(--orange);
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 0.85rem;
+    }
+    .page-hero h2 {
+      margin: 0 0 0.65rem;
+      font: 900 clamp(1.75rem, 3.4vw, 2.5rem)/1.12 var(--display);
+      letter-spacing: -0.02em;
+      color: var(--ink);
+    }
+    .page-hero h2 span { color: var(--orange); }
+    .page-hero p {
+      margin: 0;
+      color: var(--muted);
+      max-width: 68ch;
+      font-size: 1.02rem;
+    }
+    .meta-updated {
+      margin-top: 0.9rem !important;
+      font-size: 0.86rem !important;
+      color: var(--muted);
+      opacity: 0.88;
+    }
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.15rem;
+      margin-bottom: 2rem;
+    }
+    .info-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.4rem 1.35rem;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+    .info-card:hover {
+      transform: translateY(-2px);
+      border-color: rgba(255, 89, 56, 0.45);
+    }
+    .info-card h3 {
+      margin: 0 0 0.5rem;
+      font-size: 1.1rem;
+      color: var(--ink);
+    }
+    .info-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1rem;
+      margin: 2rem 0;
+    }
+    .stat-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.35rem 1.2rem;
+      text-align: center;
+    }
+    .stat-box .num {
+      display: block;
+      font: 900 2rem/1.1 var(--display);
+      color: var(--orange);
+      margin-bottom: 0.35rem;
+    }
+    .stat-box .lbl {
+      color: var(--muted);
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+    .legal-doc {
+      display: flex;
+      flex-direction: column;
+      gap: 1.15rem;
+    }
+    .legal-section {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.45rem 1.5rem;
+    }
+    .legal-section h3 {
+      margin: 0 0 0.65rem;
+      font-size: 1.15rem;
+      color: var(--ink);
+    }
+    .legal-section p {
+      margin: 0 0 0.75rem;
+      color: var(--muted);
+      font-size: 0.97rem;
+    }
+    .legal-section p:last-child { margin-bottom: 0; }
+    .legal-section ul {
+      margin: 0.4rem 0 0.75rem 1.2rem;
+      padding: 0;
+      color: var(--muted);
+      font-size: 0.96rem;
+    }
+    .legal-section li { margin-bottom: 0.42rem; }
+    .legal-section a {
+      color: var(--orange);
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .legal-section a:hover { text-decoration: underline; }
+    .faq-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+    .faq-item {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.1rem 1.35rem;
+    }
+    .faq-item summary {
+      cursor: pointer;
+      font-weight: 700;
+      color: var(--ink);
+      font-size: 1.02rem;
+      list-style: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+    }
+    .faq-item summary::after {
+      content: "+";
+      color: var(--orange);
+      font-size: 1.3rem;
+      font-weight: 800;
+      flex-shrink: 0;
+    }
+    .faq-item[open] summary::after { content: "−"; }
+    .faq-item p {
+      margin: 0.8rem 0 0;
+      color: var(--muted);
+      font-size: 0.96rem;
+      border-top: 1px solid var(--border);
+      padding-top: 0.75rem;
+    }
+    .cta-box {
+      margin-top: 2rem;
+      background: linear-gradient(135deg, rgba(255, 89, 56, 0.14), rgba(18, 18, 26, 0.96));
+      border: 1px solid rgba(255, 89, 56, 0.35);
+      border-radius: 14px;
+      padding: 1.6rem 1.5rem;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+    .cta-box h3 { margin: 0 0 0.3rem; color: var(--ink); }
+    .cta-box p { margin: 0; color: var(--muted); font-size: 0.95rem; }
+    .site-footer {
+      padding: 2.5rem 6vw 2rem;
+      background: rgba(9, 9, 13, 0.96);
+      border-top: 1px solid var(--border);
+      margin-top: 3rem;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 1.8rem;
+      margin-bottom: 1.8rem;
+    }
+    .footer-col h4 {
+      margin: 0 0 0.75rem;
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--ink);
+    }
+    .footer-col p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+    .footer-col a {
+      display: block;
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.92rem;
+      margin-bottom: 0.45rem;
+      transition: color 0.18s ease;
+    }
+    .footer-col a:hover { color: var(--orange); }
+    .footer-bottom {
+      border-top: 1px solid var(--border);
+      padding-top: 1.2rem;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 0.75rem;
+      color: var(--muted);
+      font-size: 0.86rem;
+    }
+    .footer-bottom a {
+      color: var(--muted);
+      text-decoration: none;
+      margin-left: 1rem;
+    }
+    .footer-bottom a:hover { color: var(--orange); }
+  </style>
+</head>
+<body>
+  <header><h1>Twixtors by Nitro</h1></header>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="movies.html">Movies</a>
+    <a href="anime.html">Anime</a>
+    <a href="series.html">Series</a>
+    <a href="sports.html">Sports</a>
+    <a href="cars.html">Cars</a>
+    <a href="faq.html">FAQ</a>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+  <div class="search-container">
+    <input type="text" id="searchInput" placeholder="Search entire website (movies, anime, series, sports, cars, actresses, clips)..." aria-label="Search entire website" />
+  </div>
+  <main class="page-wrap">
+    <section class="page-hero">
+      <span class="page-badge">Legal</span>
+      <h2>Terms of <span>Use</span></h2>
+      <p>Please read these Terms of Use carefully before using NitroTwixtor (nitrotwixtor.com).</p>
+      <p class="meta-updated">Last updated: November 26, 2026</p>
+    </section>
+
+    <div class="legal-doc">
+      <section class="legal-section">
+        <h3>1. Acceptance of Terms</h3>
+        <p>By accessing or using NitroTwixtor ("the Website"), you agree to be bound by these Terms of Use and our <a href="privacy.html">Privacy Policy</a>, <a href="cookies.html">Cookie Policy</a>, and <a href="dmca.html">DMCA Notice</a>. If you do not agree, please discontinue use of the Website.</p>
+      </section>
+
+      <section class="legal-section">
+        <h3>2. Permitted Use &amp; Restrictions</h3>
+        <p>NitroTwixtor provides a curated directory of video editing previews and links to slow-motion Twixtor clips and scenepacks for personal, non-commercial, and transformative editing practice.</p>
+        <ul>
+          <li>You may download linked clips for use in your own creative edits.</li>
+          <li>You may not scrape, mirror, or bulk-redistribute our website content or raw scenepacks as your own pack repository.</li>
+          <li>You are solely responsible for ensuring your published edits comply with copyright laws and platform rules (YouTube, Instagram, TikTok, etc.).</li>
+        </ul>
+      </section>
+
+      <section class="legal-section">
+        <h3>3. Third-Party Download Links &amp; Embedded Players</h3>
+        <p>NitroTwixtor does not directly store large video files on our web server. Instead, pages embed official <a href="https://www.youtube.com/" target="_blank" rel="noopener">YouTube</a> video previews and link to external third-party file hosts and link shorteners (such as Google Drive and ShrinkMe / Shrinke.me).</p>
+        <p>When you click a download button, you leave NitroTwixtor and enter a third-party website. We do not control and are not responsible for the content, availability, ads, or privacy practices of those external sites.</p>
+      </section>
+
+      <section class="legal-section">
+        <h3>4. Advertising (Adsterra)</h3>
+        <p>To keep the archive free, NitroTwixtor displays third-party advertisements served through <a href="https://adsterra.com/" target="_blank" rel="noopener">Adsterra</a>. Interactions with third-party advertisements are governed by the respective advertiser's terms and privacy policies.</p>
+      </section>
+
+      <section class="legal-section">
+        <h3>5. Disclaimer &amp; Limitation of Liability</h3>
+        <p>The Website is provided on an "as is" and "as available" basis without warranties of any kind. NitroTwixtor is not liable for any damages resulting from your use of the Website, third-party download links, or external advertisements.</p>
+      </section>
+
+      <section class="legal-section">
+        <h3>6. Changes &amp; Contact</h3>
+        <p>We may update these Terms at any time by posting the revised version on this page. For questions, contact us at <a href="mailto:support@nitrotwixtor.com">support@nitrotwixtor.com</a> or visit our <a href="contact.html">Contact page</a>.</p>
+      </section>
+    </div>
+  </main>
+  <footer class="site-footer">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h4>NITROTWIXTOR</h4>
+        <p>Premium 4K 60FPS Twixtor clips and scenepacks for video editors across Movies, Anime, Series, Sports, and Cars.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Navigation</h4>
+        <a href="index.html">Home</a>
+        <a href="movies.html">Movies</a>
+        <a href="anime.html">Anime</a>
+        <a href="series.html">Series</a>
+        <a href="faq.html">FAQ</a>
+        <a href="about.html">About Us</a>
+      </div>
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <a href="terms.html">Terms of Use</a>
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="dmca.html">DMCA Notice</a>
+        <a href="cookies.html">Cookie Policy</a>
+      </div>
+      <div class="footer-col">
+        <h4>Community</h4>
+        <a href="https://t.me/twixtorsbynitro" target="_blank" rel="noopener">Telegram Group</a>
+        <a href="https://www.youtube.com/@nitrographyy" target="_blank" rel="noopener">YouTube (@nitrographyy)</a>
+        <a href="contact.html">Contact Us</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2026 NitroTwixtor (Twixtors by Nitro). All rights reserved.</span>
+      <div>
+        <a href="privacy.html">Privacy</a>
+        <a href="terms.html">Terms</a>
+        <a href="contact.html">Contact</a>
+      </div>
+    </div>
+  </footer>
+  <script src="site-search.js"></script>
+</body>
+</html>
