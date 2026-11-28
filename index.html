@@ -234,7 +234,13 @@
     @media (max-width: 900px) {
       .nt-pill-nav { display: none; }
     }
-  </style>
+  
+    @keyframes nitro-pan { to { transform: translateX(-50%); } }
+    .marquee-wrap { overflow: hidden; }
+    .marquee-track { width: max-content; animation: nitro-pan 75s linear infinite; }
+    .marquee-wrap:hover .marquee-track, .marquee-wrap:focus-within .marquee-track { animation-play-state: paused; }
+    @media (prefers-reduced-motion: reduce) { .marquee-track { animation: none; } .marquee-wrap { overflow-x: auto; } }
+</style>
   <style>
     .site-footer { padding: 2.5rem 6vw 2rem; background: rgba(9, 9, 13, 0.96); border-top: 1px solid var(--border); margin-top: 3rem; }
     .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 1.8rem; margin-bottom: 1.8rem; }
@@ -352,7 +358,7 @@
       <a href="sports.html" class="btn-secondary">Sports</a>
       <a href="cars.html" class="btn-secondary">Cars</a>
     </div>
-    <div class="marquee-wrap" aria-hidden="true">
+    <div class="marquee-wrap" aria-label="Featured Twixtor covers">
       <div class="marquee-track">
         <a class="marquee-item" href="action.html"><img src="https://i.ytimg.com/vi/MRnNuabKDNk/hqdefault.jpg" alt="Twixtor preview" loading="lazy"></a>
         <a class="marquee-item" href="action.html"><img src="https://i.ytimg.com/vi/PBuZdW0hrag/hqdefault.jpg" alt="Twixtor preview" loading="lazy"></a>
@@ -383,7 +389,7 @@
   </section>
 
   <div class="section-head">
-    <h2>MARVEL &amp; MOVIES LATEST POSTS</h2>
+    <h2>MARVEL LATEST POSTS</h2>
     <a class="view-all-link" href="movies.html">View All &rarr;</a>
   </div>
   <section class="grid">
