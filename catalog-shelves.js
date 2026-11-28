@@ -480,7 +480,7 @@
     for (const entry of ordered) {
       const path = entry.u.split('#')[0];
       const coverKey = entry.i || entry.u;
-      if (seen.has(coverKey) || path === key + '.html' ||
+      if (seen.has(coverKey) || entry.u === key + '.html' ||
           (!collection && (counts.get(path) ?? 0) >= 2)) continue;
       seen.add(coverKey);
       counts.set(path, (counts.get(path) ?? 0) + 1);
