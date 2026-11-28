@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Movies - Twixtors by Nitro</title>
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="catalog-shelves.css">
 </head>
 <body>
   <header><h1>Movies</h1></header>
@@ -33,7 +34,11 @@
       <h3>Actresses (Movies)</h3>
     </a>
   </section>
+  <section class="nitro-shelf" aria-label="Browse Collections" data-collection-shelf="movies" hidden><div class="section-head"><h2>Browse Collections</h2></div><div class="nitro-shelf-grid"></div></section>
+  <section class="nitro-shelf" aria-label="Featured Twixtors" data-clip-shelf="movies" hidden><div class="section-head"><h2>Featured Twixtors</h2></div><div class="nitro-shelf-grid"></div></section>
+
   <footer>&copy; 2026 Twixtors by Nitro. All rights reserved.</footer>
   <script src="site-search.js"></script>
+  <script src="catalog-shelves.js" defer></script>
 </body>
 </html>
