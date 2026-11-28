@@ -269,6 +269,71 @@
   </style>
 </head>
 <body>
+
+  <!-- NITROTWIXTOR 24-HOUR CONTENT LOCKER (MONETAG) -->
+<div id="nitro-locker-overlay" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.85); backdrop-filter:blur(8px); z-index:99999; align-items:center; justify-content:center; font-family:system-ui,-apple-system,sans-serif;">
+  <div style="background:#121215; border:1px solid #2a2a32; border-radius:16px; max-width:400px; width:90%; padding:28px 24px; text-align:center; color:#ffffff; box-shadow:0 20px 50px rgba(0,0,0,0.7);">
+    
+    <div style="font-weight:800; letter-spacing:2px; font-size:13px; color:#a855f7; margin-bottom:10px;">NITROTWIXTOR</div>
+    <h2 style="margin:0 0 8px; font-size:21px; font-weight:700;">Unlock more content</h2>
+    <p style="margin:0 0 22px; font-size:14px; color:#a1a1aa; line-height:1.5;">
+      Take action to continue accessing the 4K Twixtor packs on this site.
+    </p>
+
+    <button id="nitro-unlock-btn" onclick="startNitroUnlock()" style="width:100%; background:#ffffff; color:#09090b; border:none; border-radius:10px; padding:14px 18px; font-size:14px; font-weight:700; cursor:pointer; display:flex; align-items:center; justify-content:space-between; transition:opacity 0.2s;">
+      <span style="text-align:left;">
+        <span style="display:block;">View a short ad</span>
+        <span style="display:block; font-size:11px; font-weight:500; color:#52525b;">Site-wide access for 24 hours</span>
+      </span>
+      <span style="background:#18181b; color:#fff; width:28px; height:28px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:12px;">▶</span>
+    </button>
+
+    <p id="nitro-timer-msg" style="display:none; margin:14px 0 0; font-size:13px; color:#a855f7; font-weight:600;">
+      Verifying ad view... Unlocking in <span id="nitro-countdown">8</span>s
+    </p>
+  </div>
+</div>
+
+<script>
+  const DIRECT_AD_LINK = "https://directyp.org/4/1bb47d68d2f63fac9640fdeda43e686b";
+  const UNLOCK_HOURS = 24;
+
+  (function checkNitroAccess() {
+    const unlockedUntil = localStorage.getItem("nitro_unlocked_until");
+    if (!unlockedUntil || Date.now() > parseInt(unlockedUntil, 10)) {
+      document.getElementById("nitro-locker-overlay").style.display = "flex";
+      document.body.style.overflow = "hidden";
+    }
+  })();
+
+  function startNitroUnlock() {
+    window.open(DIRECT_AD_LINK, "_blank", "noopener,noreferrer");
+
+    const btn = document.getElementById("nitro-unlock-btn");
+    const msg = document.getElementById("nitro-timer-msg");
+    const countEl = document.getElementById("nitro-countdown");
+
+    btn.disabled = true;
+    btn.style.opacity = "0.6";
+    msg.style.display = "block";
+
+    let seconds = 8;
+    const timer = setInterval(() => {
+      seconds--;
+      countEl.textContent = seconds;
+      if (seconds <= 0) {
+        clearInterval(timer);
+        const expiry = Date.now() + UNLOCK_HOURS * 60 * 60 * 1000;
+        localStorage.setItem("nitro_unlocked_until", expiry.toString());
+        document.getElementById("nitro-locker-overlay").style.display = "none";
+        document.body.style.overflow = "";
+      }
+    }, 1000);
+  }
+</script>
+
+
+  
     <div class="nt-topbar">
     <div class="nt-topbar-inner">
       <a class="nt-brand" href="index.html">
