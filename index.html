@@ -252,6 +252,21 @@
     .footer-bottom a { color: var(--muted); text-decoration: none; margin-left: 1rem; }
     .footer-bottom a:hover { color: var(--orange); }
   </style>
+
+  <style>
+    html[data-nitro-theme="ember"] { background: #180e15; }
+    html[data-nitro-theme="ember"] body { background: linear-gradient(150deg,#24101d,#110e1d 58%,#2d1710); }
+    html[data-nitro-theme="ember"] .home-hero { box-shadow: inset 0 0 100px #f9731629; }
+    #nitro-theme { cursor: pointer; margin-top: 1rem; }
+    .nt-guide-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:1rem; }
+    .nt-guide-grid iframe { display:block; width:100%; aspect-ratio:16/9; border:0; border-radius:10px; }
+    @media(max-width:650px) { .nt-guide-grid { grid-template-columns:1fr; } }
+    @media(hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference) {
+      .marquee-track { translate: var(--cover-pan,0px) 0; transition: translate .24s ease-out; }
+      .marquee-item img { transition: transform .24s ease; }
+      .marquee-item:hover img { transform: scale(1.04); }
+    }
+  </style>
 </head>
 <body>
     <div class="nt-topbar">
@@ -358,6 +373,7 @@
       <a href="sports.html" class="btn-secondary">Sports</a>
       <a href="cars.html" class="btn-secondary">Cars</a>
     </div>
+    <button id="nitro-theme" class="btn-secondary" type="button" aria-pressed="false">Ember mode</button>
     <div class="marquee-wrap" aria-label="Featured Twixtor covers">
       <div class="marquee-track">
         <a class="marquee-item" href="action.html"><img src="https://i.ytimg.com/vi/MRnNuabKDNk/hqdefault.jpg" alt="Twixtor preview" loading="lazy"></a>
@@ -386,6 +402,20 @@
         <a class="marquee-item" href="action.html"><img src="https://i.ytimg.com/vi/x6-Y0GIUDXs/hqdefault.jpg" alt="Twixtor preview" loading="lazy"></a>
       </div>
     </div>
+  </section>
+
+  <div class="section-head"><h2 id="download-guides-heading">How to Download from ShrinkMe</h2></div>
+  <section class="grid nt-guide-grid" aria-labelledby="download-guides-heading">
+    <article class="card">
+      <iframe src="https://www.youtube-nocookie.com/embed/tSdEuRM8DVY" title="Download presets and materials through ShrinkMe" loading="lazy" allowfullscreen></iframe>
+      <h3>Download presets and materials through ShrinkMe</h3>
+      <a class="btn-secondary" href="https://www.youtube.com/watch?v=tSdEuRM8DVY">Open tutorial on YouTube</a>
+    </article>
+    <article class="card">
+      <iframe src="https://www.youtube-nocookie.com/embed/NF3VcQtdGUM" title="Download XML and Twixtors through ShrinkMe" loading="lazy" allowfullscreen></iframe>
+      <h3>Download XML and Twixtors through ShrinkMe</h3>
+      <a class="btn-secondary" href="https://www.youtube.com/watch?v=NF3VcQtdGUM">Open tutorial on YouTube</a>
+    </article>
   </section>
 
   <div class="section-head">
@@ -602,6 +632,29 @@
       if (menuBtn) menuBtn.addEventListener('click', () => toggleDrawer(true));
       if (drawerClose) drawerClose.addEventListener('click', () => toggleDrawer(false));
       if (backdrop) backdrop.addEventListener('click', () => toggleDrawer(false));
+    })();
+  </script>
+  <script>
+    (() => {
+      const theme = document.querySelector('#nitro-theme');
+      const root = document.documentElement;
+      const setTheme = enabled => {
+        root.dataset.nitroTheme = enabled ? 'ember' : '';
+        theme.setAttribute('aria-pressed', String(enabled));
+      };
+      try { setTheme(localStorage.getItem('nitro-theme') === 'ember'); } catch {}
+      theme.addEventListener('click', () => {
+        setTheme(root.dataset.nitroTheme !== 'ember');
+        try { localStorage.setItem('nitro-theme', root.dataset.nitroTheme); } catch {}
+      });
+      const covers = document.querySelector('.marquee-wrap');
+      covers.addEventListener('pointermove', event => {
+        if (event.pointerType !== 'mouse') return;
+        const box = covers.getBoundingClientRect();
+        const position = (event.clientX - box.left) / box.width - .5;
+        covers.style.setProperty('--cover-pan', `${position * -100}px`);
+      });
+      covers.addEventListener('pointerleave', () => covers.style.removeProperty('--cover-pan'));
     })();
   </script>
 </body>
